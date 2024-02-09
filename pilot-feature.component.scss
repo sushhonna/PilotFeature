@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'sigicons';
+    src: url('../../assets/fonts/sigicons.eot') format('truetype');
+    src: url('../../assets/fonts/sigicons.svg') format('truetype');
+    src: url('../../assets/fonts/sigicons.ttf') format('truetype');
+    src: url('../../assets/fonts/sigicons.woff') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+mat-card {
+    margin: 20px;
+    padding: 35px;
+}
+
+.pagination-table {
+    border: 1px solid darkgrey;
+    margin-bottom: 10% !important;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #ff9800 !important;
+}
+
+.searchDD {
+    height: 45px;
+    font-size: 20px;
+    background-color: #8080801f;
+}
+
+.ddCheckbox {
+    font-size: 18px;
+    line-height: 40px;
+    padding: 15px;
+    color: gray;
+}
+
+input[type='checkbox'] {
+    accent-color: #ff9800;
+}
+
+table {
+    width: 100%;
+
+    th {
+        background-color: #a9a9a99e;
+        font-size: 20px;
+    }
+
+    td {
+        font-size: 15px;
+    }
+
+    .editBtn {
+        text-align: end;
+        position: relative;
+    }
+
+    .editBtncolor {
+        background-color: #ff9800;
+        border-color: transparent;
+        border-radius: 5px;
+        font-size: 15px;
+        padding: 5px 20px;
+        margin-right: 12%;
+    }
+
+    .editBtncolor:disabled,
+    .editBtncolor[disabled] {
+        border: 1px solid #999999;
+        background-color: #cccccc;
+        color: #666666;
+    }
+
+    .sort-indicator {
+        font-family: 'sigicons';
+        font-size: 24px;
+        line-height: 18px;
+        width: 24px;
+        display: inline-block;
+        position: relative;
+        right: -15px;
+    }
+
+    .shop {
+        text-align: initial;
+        flex: 1 1 33.33%;
+        max-width: 33.33%;
+        padding: 0 15px;
+    }
+
+    .hiddenRow {
+        display: flex;
+        margin: 0 -15px;
+        width: 100%;
+        padding-bottom: 15px;
+    }
+
+    .mat-form-field-appearance-legacy .mat-form-field-underline .mat-form-field-appearance-legacy .mat-form-field-ripple {
+        height: 0 !important;
+        display: none !important;
+        bottom: 0 !important;
+    }
+
+    .borderDD {
+        border: 1px solid gray;
+        padding: 0 10px;
+        margin-bottom: 15px;
+        height: 42px;
+        width: 82% !important;
+    }
+
+    .mat-form-field {
+        width: 100%;
+    }
+
+    .closeRow {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        font-size: 2.5em;
+    }
+
+    tr.mat-row {
+        height: 0px !important;
+    }
+
+    .mainRow {
+        height: 45px;
+    }
+
+    .clearDropdown {
+        font-size: 12px;
+    }
+
+    .clearSelection {
+        width: 85% !important;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+}

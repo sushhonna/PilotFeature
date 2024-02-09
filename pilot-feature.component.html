@@ -1,0 +1,147 @@
+<mat-card>
+
+  <div class="header">
+    <p class=heading>Pilot Features</p>
+  </div>
+
+  <form [formGroup]="pilotForm">
+
+    <div class="pagination-table">
+      <table mat-table [dataSource]="pilotDataSourceSort" class="mat-elevation-z8" matSort
+        (matSortChange)="sortTable($event)" multiTemplateDataRows>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="description">
+            Feature
+            <div class="sort-indicator" [ngClass]="{ desc: sortDirection }">
+              {{ sortIndicator('description') }}
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element" class="mainRow"> {{element.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="status">
+            Pilot?
+            <div class="sort-indicator" [ngClass]="{ desc: sortDirection }">
+              {{ sortIndicator('status') }}
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex;" class="mainRow">
+            <label> <input type="checkbox" [checked]="element.status == 'ACTIVE'"
+                (change)="onStartPilotCheck(i, $event.target.checked)" />
+            </label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td class="editBtn mainRow" mat-cell *matCellDef="let element; let i = dataIndex;">
+            <button *ngIf="!showSaveSelection[i]" (click)="editSelection(i)" type="button" class="btn editBtncolor">
+              Edit Selections
+            </button>
+            <button *ngIf="showSaveSelection[i]" (click)="updateAndSavePilot(i)" type="button" class="btn editBtncolor"
+              [disabled]="disableSaveBtn[i]" data-bs-target="#fileDeleteModal"> Save Selections
+            </button>
+            <span *ngIf="showNewRow[i]" class="closeRow" (click)="closeRow(i,null)">&times;</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell [attr.colspan]="displayedColumns.length" *matCellDef="let element; let i = dataIndex">
+            <div class="hiddenRow" *ngIf="showNewRow[i]">
+
+              <div class="shop">
+                <p>Shop(s)</p>
+                <mat-form-field class="borderDD">
+                  <mat-label>Select</mat-label>
+                  <mat-select multiple formControlName="selectedShopValue" (selectionChange)="dropdownSelection(i)"
+                    (click)="enableDropdown()">
+                    <input matInput #multiUserSearchShop autocomplete="off" placeholder=" Search"
+                      formControlName="shopName" class="searchDD" (input)="shopFilterValues($event)"
+                      (inputCleared)="shopSearchCleared()" (keydown)="$event.stopPropagation()">
+                    <label class="ddCheckbox">View selected options : <input type="checkbox"
+                        [checked]="ddShopChecked == true" (change)="showShopVal(i, $event.target.checked)" />
+                    </label>
+                    <hr>
+                    <mat-option *ngIf="!ddShopCheckedAll" #allSelected (click)="toggleAllSelection(i)"
+                      [value]="All">All</mat-option>
+                    <mat-option *ngFor="let shop of (ddShopChecked ? selectedShop : shops)"
+                      (click)="togglePerOne(allSelected.viewValue)" [value]="shop">
+                      {{shop}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="clearSelection">
+                  <span class="clearDropdown" *ngIf="showClearSelectionshop[i]" (click)="clearSelectionShop(i)">&times;
+                    Clear Selections </span>
+                </div>
+              </div>
+
+              <div class="shop">
+                <p>District Manager(s)</p>
+                <mat-form-field class="borderDD">
+                  <mat-label>Select</mat-label>
+                  <mat-select multiple formControlName="selectedManagerValue" (selectionChange)="dropdownSelection(i)"
+                    (click)="enableDropdown()">
+                    <input matInput #multiUserSearchManager autocomplete="off" placeholder=" Search"
+                      formControlName="managerName" class="searchDD" (input)="managerFilterValues($event)"
+                      (inputCleared)="managerSearchCleared()" (keydown)="$event.stopPropagation()">
+                    <label class="ddCheckbox">View selected options : <input type="checkbox"
+                        [checked]="ddManagerChecked == true" (change)="showManagerVal(i, $event.target.checked)" />
+                    </label>
+                    <hr>
+                    <mat-option *ngIf="!ddManagerCheckedAll" #allSelectedM (click)="toggleAllSelectionM(i)"
+                      [value]="All">All</mat-option>
+                    <mat-option *ngFor="let manager of (ddManagerChecked ? selectedManager : districtManager)"
+                      (click)="togglePerOneM(allSelectedM.viewValue)"
+                      [value]="manager.employeeID">{{manager.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="clearSelection">
+                  <span class="clearDropdown" *ngIf="showClearSelectionManager[i]"
+                    (click)="clearSelectionMngr(i)">&times; Clear Selections </span>
+                </div>
+              </div>
+
+              <div class="shop">
+                <p>Districts</p>
+                <mat-form-field class="borderDD">
+                  <mat-label>Select</mat-label>
+                  <mat-select multiple formControlName="selectedDistrictValue" (selectionChange)="dropdownSelection(i)"
+                    (click)="enableDropdown()">
+                    <input matInput #multiUserSearchDistricts autocomplete="off" placeholder=" Search"
+                      formControlName="districtsName" class="searchDD" (input)="districtFilterValues($event)"
+                      (inputCleared)="districtSearchCleared()" (keydown)="$event.stopPropagation()">
+                    <label class="ddCheckbox">View selected options : <input type="checkbox"
+                        [checked]="ddDistrictChecked == true" (change)="showDictrictVal(i, $event.target.checked)" />
+                    </label>
+                    <hr>
+                    <mat-option *ngIf="!ddDistrictCheckedAll" #allSelectedD (click)="toggleAllSelectionD(i)"
+                      [value]="All">All</mat-option>
+                    <mat-option *ngFor="let district of (ddDistrictChecked ? selectedDistrict : districts)"
+                      (click)="togglePerOneD(allSelectedD.viewValue)"
+                      [value]="district.employeeID">{{district.districtTitle}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="clearSelection">
+                  <span class="clearDropdown" *ngIf="showClearSelectionDistrict[i]"
+                    (click)="clearSelectionDist(i)">&times; Clear Selections </span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"></tr>
+        <tr mat-row *matRowDef="let element; columns: ['expandedDetail'];"></tr>
+
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+
+  </form>
+
+</mat-card>
